@@ -24,11 +24,11 @@ Edit `lxd-portforward.conf` to forward the ports you want forwarded.
 Port forwarding information is stored in `/etc/lxd/lxd-portforward.conf`. Format is:
 
 ```
-container_name:local_port:remote_port
+<container_name>:<local_port>:<remote_port>
 ```
 
 IP addresses are stored in `/var/run/lxd-portforward/<container name>` so when
-the container is stopped the proper iptables rules can be removed.
+the container is stopped the proper `iptables` rules can be removed.
 
 
 ## Author & Licence
