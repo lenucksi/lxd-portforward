@@ -1,27 +1,32 @@
-# lxc-portforward
-Simple script to automatically set up port forwarding for LXC containers
+# lxd-portforward
 
-USAGE:
-------
+Simple script to automatically set up port forwarding for LXD containers. Inspired by
+[evanhempel/lxc-portforward](//github.com/evanhempel/lxc-portforward).
 
-Copy lxc-portforward, lxc-portforward.conf, and lxc-portforward-helper to /etc/lxc.
+
+## Usage
+
+Copy `lxd-portforward`, `lxd-portforward.conf`, and `lxd-portforward-helper` to `/etc/lxd`.
 
 In your container config set:
 
-    lxc.network.script.up = /etc/lxc/lxc-portforward
-    lxc.network.script.down = /etc/lxc/lxc-portforward
+    lxc.network.script.up = /etc/lxd/lxd-portforward
+    lxc.network.script.down = /etc/lxd/lxd-portforward
 
-Edit lxc-portforward.conf to forward the ports you want forwarded
+Edit `lxd-portforward.conf` to forward the ports you want forwarded.
 
-FILES:
-------
 
-Port forwarding information is stored in /etc/lxc/lxc-portforward.conf.  Format is:
+## Files
 
-    container_name:local_port:remote_port
+Port forwarding information is stored in `/etc/lxd/lxd-portforward.conf`. Format is:
 
-IP addresses are stored in /var/run/lxc-portforward/<container name> so when
+```
+container_name:local_port:remote_port
+```
+
+IP addresses are stored in `/var/run/lxd-portforward/<container name>` so when
 the container is stopped the proper iptables rules can be removed.
+
 
 ## Author & Licence
 
