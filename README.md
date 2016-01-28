@@ -22,3 +22,7 @@ Port forwarding information is stored in /etc/lxc/lxc-portforward.conf.  Format 
 
 IP addresses are stored in /var/run/lxc-portforward/<container name> so when
 the container is stopped the proper iptables rules can be removed.
+
+## Author & Licence
+
+© 2016 Sebastian Gröhn, licenced under the [MIT License](LICENCE.txt).
