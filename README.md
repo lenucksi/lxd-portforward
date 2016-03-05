@@ -9,11 +9,12 @@ Simple script to automatically set up port forwarding for LXD containers. Inspir
 Copy `lxd-portforward`, `lxd-portforward-helper`, and `lxd-portforward.conf.template`
 (renamed as `lxd-portforward.conf`) to `/etc/lxd`.
 
-_[TODO update for LXD]_ ~~In your container config set~~:
+In your LXD container or profile config set:
 
 ```
-lxc.network.script.up = /etc/lxd/lxd-portforward
-lxc.network.script.down = /etc/lxd/lxd-portforward
+raw.lxc: |-
+  lxc.hook.post-stop = /etc/lxd/lxd-portforward
+  lxc.hook.pre-start = /etc/lxd/lxd-portforward
 ```
 
 Edit `lxd-portforward.conf` to forward the ports you want forwarded.
