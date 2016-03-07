@@ -3,24 +3,27 @@
 # ARGS: up|down container
 
 CONTAINER="$2"
+DIRECTION="$1"
 
 mkdir -p /var/run/lxd-portforward
 
-if [ "$1" = "up" ]
+if [ "$DIRECTION" = "up" ]
 then
   ACTION="-A"
   IP="$(lxc info "$CONTAINER" | grep eth0 | awk '{print $3}')"
   echo "$IP" > "/var/run/lxd-portforward/$CONTAINER"
 else
+  # TODO maybe store actual forwarded ports somewhere, LXD config maybe?
   ACTION="-D"
   IP="$(cat "/var/run/lxd-portforward/$CONTAINER")"
 fi
 
-for line in $(grep "^$CONTAINER" /etc/lxd/lxd-portforward.conf)
+PORTS="$(lxc config get "$CONTAINER" user.forwarded_port | cut -d' ' -f2 | grep "^[1-9]")"
+
+for line in $PORTS
 do
-  FROM="$(echo $line | cut -f2 -d:)"
-  TO="$(echo $line | cut -f3 -d:)"
+  FROM="$(echo $line | cut -d: -f1)"
+  TO="$(echo $line | cut -d: -f2)"
   iptables -t nat $ACTION PREROUTING -p tcp -i eth0 --dport "$FROM" -j DNAT --to-destination "$IP:$TO" \
     -m comment --comment "lxd-portforward: *:$FROM -> $CONTAINER:$TO"
 done
-
