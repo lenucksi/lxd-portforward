@@ -9,8 +9,8 @@ up port forwarding in `iptables`:s `PREROUTING` chain.
 
 Copy `lxd-portforward` and `lxd-portforward-helper` to `/etc/lxd`.
 
-In the configuration of an LXD profile that your containers will use (e.g. default`),
-set or amend the following key:
+In the configuration of an LXD profile that your containers will use (e.g. `default`),
+set or amend to the following key:
 
 ```
 raw.lxc: |-
@@ -18,8 +18,8 @@ raw.lxc: |-
   lxc.hook.pre-start = /etc/lxd/lxd-portforward
 ```
 
-Use the command `lxc profile edit <profile>` to edit the configuration inline in
-an editor.
+(Use the command `lxc profile edit <profile>` to edit the configuration inline in
+an editor.)
 
 
 ## Usage
@@ -33,8 +33,10 @@ user.forwarded_port: |-
 ```
 
 Use the command `lxc config edit <container>` to edit the configuration inline in
-an editor, or pipe the forwarding to `lxc config set <container> user.forwarded_port`
-(newline-spearated).
+an editor, or pipe the forward mappings from a file (each mapping newline-separated):
+```
+cat <mapping_file> | lxc config set <container> user.forwarded_port`
+```
 
 
 ## Files
@@ -43,6 +45,6 @@ IP addresses are stored in `/var/run/lxd-portforward/<container name>` so when
 the container is stopped the proper `iptables` rules can be removed.
 
 
-## Author & Licence
+## Author & licence
 
 © 2016 Sebastian Gröhn, licenced under the [MIT License](LICENCE.txt).
